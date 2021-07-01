@@ -1,0 +1,135 @@
+<!--https://codepen.io/freeCodeCamp/details/VPaoNP-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/269be7f06a.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{url_for('static', filename='main.css')}}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='ks.ico') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ladda-bootstrap/0.9.4/ladda.min.css">
+    <title>Fetch GenGee Data</title>
+</head>
+<body>
+  <nav>
+    <ul>
+        <li>
+          <a href="#">Home</a>
+        </li>
+        <li>
+          <a href="http://192.168.1.120/timer">Timer</a>
+        </li>
+          <li>
+            <a href="http://192.168.1.120/terminate">Terminate</a>
+          </li>
+          <li>
+            <a href="http://192.168.1.120/contact">Contact</a>
+          </li>
+          <li>
+            <a href="http://192.168.1.120/downloads">Downloads</a>
+          </li>
+          <li>
+            <a style="color: white;" href="http://192.168.1.120/logout">Logout <i class="fas fa-sign-out-alt"></i></a>
+          </li>
+    </ul>
+  </nav>
+  {% for category, message in get_flashed_messages(with_categories=True) %}
+  <div class="alert-{{category}}">
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+    <strong>{{message}}</strong>
+  </div>
+  {% endfor %}
+    <div class="container">
+        <header class="header">
+          <h1 id="title" class="text-center">Fetch GenGee Spreadsheets</h1>
+          <p id="description" class="description text-center">
+            Download Match and Train spreadsheets
+          </p>
+        </header>
+
+        <form id="survey-form" method="post">
+
+          <div class="form-group">
+            <label id="teamname-label" for="teamname"><i class="far fa-futbol"></i>&nbsp;Team Name<span class="clue">(optional)</span></label>
+            <input type="text" name="teamname" id="teamname" class="form-control" placeholder="Enter team name" />
+          </div>
+
+
+          <div class="form-group">
+            <p>Select Match-Train</p>
+            <select id="dropdown" name="matr" class="form-control" required>
+              <option selected="true" value="Match">Match</option>
+              <option value="Train">Train</option>
+            </select>
+          </div>
+
+
+          <div class="form-group disp disp1">
+            <p>View Match Dates</p>
+            <select id="dropdown" name="dts" class="form-control">
+              <option selected=True disabled> Match Dates </option>
+              {%for i in range(0, len)%}
+                <option disabled> {{date[i]}} </option>
+              {%endfor%}
+            </select>
+          </div>
+
+          <div class="form-group disp">
+            <p>View Train Dates</p>
+            <select id="dropdown" name="dts" class="form-control">
+              <option selected=True disabled> Train Dates </option>
+              {%for i in range(0, len1)%}
+                <option disabled> {{date1[i]}} </option>
+              {%endfor%}
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label id="date-label" for="date"><i class="fas fa-calendar-alt"></i>&nbsp;Insert Date</label>
+            <input type="text" name="date" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))" id="date" class="form-control" placeholder="YYYY-MM-DD" />
+            <input type="checkbox" id="show_div" onclick="myFunction()"> Range
+          </div>
+
+          <div class="form-group" id="range" style="display: none;">
+            <label id="date-label" for="date1"><i class="far fa-calendar-alt"></i>&nbsp;Insert Range</label>
+            <input type="text" name="date1" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))" id="date" class="form-control" placeholder="YYYY-MM-DD" />
+          </div>
+
+          <div class="form-group">
+            <p>Select Browser</p>
+            <input type="radio" name="browser" value="Firefox" checked/> Mozilla Firefox <i class="fab fa-firefox-browser"></i></br>
+            <input type="radio" name="browser" value="Chrome"/> Google Chrome <i class="fab fa-chrome"></i></br>
+            <input type="radio" name="browser" value="Edge"/> Microsoft Edge <i class="fab fa-edge"></i>
+          </div>
+      
+
+          <div class="form-group">
+            <p>Headless Mode</p>
+            <input type="radio" name="mode" value="y" checked/> <div class="tooltip">Headless
+              <span class="tooltiptext">The browser won't show when fetching the spreadsheets!</span>
+            </div> <i class="fas fa-eye-slash"></i></br>
+            <input type="radio" name="mode" value="n"/> <div class="tooltip">Visible
+              <span class="tooltiptext">The browser will show when fetching the spreadsheets!</span>
+            </div> <i class="fas fa-eye"></i></br>
+          </div>
+
+          <div class="form-group">
+              <button type="submit" id="submit" class="submit-button">
+              Fetch&nbsp;<i class="fas fa-download"></i>
+            </button>
+          </div>
+        </form>
+      </div> 
+            <script>
+              function myFunction() {
+                var checkBox = document.getElementById("show_div");
+                var range = document.getElementById("range");
+                if (checkBox.checked == true){
+                  range.style.display = "block";
+                } else {
+                  range.style.display = "none";
+                }
+              }
+            </script>
+</html>
