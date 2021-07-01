@@ -1,0 +1,67 @@
+<!--https://codepen.io/freeCodeCamp/details/VPaoNP-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/269be7f06a.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{url_for('static', filename='main.css')}}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='ks.ico') }}">
+    <title>Downloaded Spreadsheets</title>
+</head>
+<body>
+  <nav>
+    <ul>
+      <li>
+        <a href="http://127.0.0.1/home">Home</a>
+      </li>
+      <li>
+        <a href="http://127.0.0.1/timer">Timer</a>
+      </li>
+        <li>
+          <a href="http://127.0.0.1/terminate">Terminate</a>
+        </li>
+        <li>
+          <a href="http://127.0.0.1/contact">Contact</a>
+        </li>
+        <li>
+            <a href="#">Downloads</a>
+          </li>
+        <li>
+          <a style="color: white;" href="http://127.0.0.1/logout">Logout <i class="fas fa-sign-out-alt"></i></a>
+        </li>
+    </ul>
+  </nav>
+    <div class="container">
+        <header class="header">
+          <h1 id="title" class="text-center">Downloaded Spreedsheets</h1>
+          <p id="description" class="description text-center">
+            Below is an overview of the downloaded spreedseets and their sizes
+          </p>
+        </header>
+
+        
+        <form id="survey-form">
+            <label><i class="fas fa-file-excel"></i>&nbsp;Spreadsheets Table</label>
+            <table class="rwd-table">
+                <tr>
+                  <th>File Name</th>
+                  <th>Size</th>
+                  <th>Creation Date</th>
+                </tr>
+                {% if len > 0 %}
+                  {%for i in range(0, len)%}
+                  <tr>
+                      {%for x in range(0, len1)%}
+                      <td>{{data[i][x]}}</td>
+                      {%endfor%}
+                  </tr>
+                  {%endfor%}
+                {% else %}
+                  <p style="font-style: italic;">No files found!</p>
+                {% endif %}
+              </table>
+        </form>
+      </div>
+</html>
